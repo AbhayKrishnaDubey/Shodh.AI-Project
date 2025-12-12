@@ -1,4 +1,4 @@
-#1. Present Your Results
+1. Present Your Results
 
 Deep Learning (DL) Model – Evaluation Metrics
 For the DL model, we evaluate using AUC and F1-Score.
@@ -23,30 +23,25 @@ The RL agent performs significantly better than the baselines because -0.08 is m
 
 
 
+
+
+
 2. Why These Metrics Are Used
 
 Why AUC and F1-Score for the DL Model
-AUC
+AUC: AUC shows how well the model separates safe borrowers from risky borrowers.
+     A higher AUC indicates better ranking ability.
 
-AUC shows how well the model separates safe borrowers from risky borrowers.
-A higher AUC indicates better ranking ability.
-
-F1-Score
-
-F1 evaluates the model at a particular decision threshold (for example, approving if probability > 0.5).
-It balances:
-
-Precision: how many approved loans were actually good
-
-Recall: how many good customers the model successfully identified
+F1-Score:- It evaluates the model at a particular decision threshold (for example, approving if probability > 0.5).
+           It balances:
+            Precision: how many approved loans were actually good
+            Recall: how many good customers the model successfully identified
 
 Together, AUC and F1 give:
-
 Overall prediction quality across all thresholds (AUC)
-
 Decision quality at a chosen threshold (F1)
 
-Why Estimated Policy Value for the RL Agent
+Why Estimated Policy Value for the RL Agent?
 
 The RL agent is not predicting default probability.
 Instead, it learns which action leads to higher long-term profit.
@@ -59,30 +54,31 @@ The real business objective: maximize profit and minimize losses
 
 Therefore, this metric directly measures policy performance and is the correct evaluation method for RL.
 
+
+
+
+
+
 3. Comparing the DL Policy and the RL Policy
-DL Model’s Policy
+
+DL Model’s Policy:- 
 
 The DL model outputs a default probability.
 A simple decision rule looks like:
 
 If predicted default probability < 0.5, then approve
 Otherwise, deny
-
 This makes the DL model risk-focused.
 
 RL Agent’s Policy
 
 The RL agent chooses actions based on maximizing reward (profit).
-
 It may approve some risky applicants if:
-
 Loan amount is high
-
 Expected repayment profit is high
-
 The expected benefit outweighs the potential loss
-
 This makes the RL model profit-focused.
+
 
 Example Scenario Where They Disagree
 | Feature                            | Value            |
@@ -98,57 +94,46 @@ The RL agent learns that approving such loans can increase overall portfolio rew
 
 Core Difference
 
-DL Model: Prioritizes safety.
-
-RL Model: Prioritizes profit.
+  DL Model: Prioritizes safety.
+  RL Model: Prioritizes profit.
 
 This difference naturally leads to disagreement on some applicants.
 
+
+
+
+
+
 4. Future Steps
-Deployment Readiness
 
-The models should not be deployed yet.
+--> Deployment Readiness
 
-Further steps needed:
+    1. The models should not be deployed yet.
+    2. Further steps needed:
+    3. Testing on real historical loan data
+    4. Fairness evaluation
+    5. Stability checks over time
+    6. Better calibration of the reward function to real monetary values
 
-Testing on real historical loan data
+--> Limitations of the Current Approach
 
-Fairness evaluation
+    1. RL environment is simplified
+    2. Reward design can strongly influence behavior
+    3. No real bank data used
+    4. DL model uses limited features
+    5. RL policy is harder to explain to auditors
 
-Stability checks over time
+--> Additional Data to Collect
 
-Better calibration of the reward function to real monetary values
+    1. Income and employment details
+    2. Bank transaction behavior
+    3. More detailed loan history
+    4. Economic indicators
+    5. Past repayment behavior such as late payments
 
-Limitations of the Current Approach
+--> Other Algorithms to Explore
 
-RL environment is simplified
-
-Reward design can strongly influence behavior
-
-No real bank data used
-
-DL model uses limited features
-
-RL policy is harder to explain to auditors
-
-Additional Data to Collect
-
-Income and employment details
-
-Bank transaction behavior
-
-More detailed loan history
-
-Economic indicators
-
-Past repayment behavior such as late payments
-
-Other Algorithms to Explore
-
-XGBoost or LightGBM for tabular data
-
-Constrained Reinforcement Learning
-
-Offline Reinforcement Learning using logged bank data
-
-Contextual Bandit algorithms
+    1. XGBoost or LightGBM for tabular data
+    2. Constrained Reinforcement Learning
+    3. Offline Reinforcement Learning using logged bank data
+    4. Contextual Bandit algorithms
