@@ -1,0 +1,148 @@
+1. Present Your Results
+Deep Learning (DL) Model – Evaluation Metrics
+
+For the DL model, we evaluate using AUC and F1-Score.
+
+Metric	Meaning	Value
+AUC	Measures how well the model separates good vs bad borrowers	Example: 0.85
+F1-Score	Balance between catching good customers and avoiding risky ones	Example: 0.62
+Reinforcement Learning (RL) Agent – Estimated Policy Value
+
+Your RL evaluation produced the following:
+
+Policy	Average Reward per Decision
+PPO Agent	-0.082187
+Approve All	-4.015352
+Random Policy	-2.005484
+
+Interpretation:
+A higher (less negative) reward indicates a better lending strategy.
+The RL agent performs significantly better than the baselines because -0.08 is much closer to zero than -4 or -2.
+
+2. Why These Metrics Are Used
+Why AUC and F1-Score for the DL Model
+AUC
+
+AUC shows how well the model separates safe borrowers from risky borrowers.
+A higher AUC indicates better ranking ability.
+
+F1-Score
+
+F1 evaluates the model at a particular decision threshold (for example, approving if probability > 0.5).
+It balances:
+
+Precision: how many approved loans were actually good
+
+Recall: how many good customers the model successfully identified
+
+Together, AUC and F1 give:
+
+Overall prediction quality across all thresholds (AUC)
+
+Decision quality at a chosen threshold (F1)
+
+Why Estimated Policy Value for the RL Agent
+
+The RL agent is not predicting default probability.
+Instead, it learns which action leads to higher long-term profit.
+
+Estimated Policy Value represents:
+
+Expected gain or loss from following the agent’s decisions
+
+The real business objective: maximize profit and minimize losses
+
+Therefore, this metric directly measures policy performance and is the correct evaluation method for RL.
+
+3. Comparing the DL Policy and the RL Policy
+DL Model’s Policy
+
+The DL model outputs a default probability.
+A simple decision rule looks like:
+
+If predicted default probability < 0.5, then approve
+Otherwise, deny
+
+This makes the DL model risk-focused.
+
+RL Agent’s Policy
+
+The RL agent chooses actions based on maximizing reward (profit).
+
+It may approve some risky applicants if:
+
+Loan amount is high
+
+Expected repayment profit is high
+
+The expected benefit outweighs the potential loss
+
+This makes the RL model profit-focused.
+
+Example Scenario Where They Disagree
+Feature	Value
+Predicted default probability (DL)	0.65 (DL denies)
+Loan amount	25,000
+Expected payment	30,000
+RL decision	Approve
+Why RL Approves
+
+Although the borrower is risky, the potential profit is high.
+The RL agent learns that approving such loans can increase overall portfolio reward.
+
+Core Difference
+
+DL Model: Prioritizes safety.
+
+RL Model: Prioritizes profit.
+
+This difference naturally leads to disagreement on some applicants.
+
+4. Future Steps
+Deployment Readiness
+
+The models should not be deployed yet.
+
+Further steps needed:
+
+Testing on real historical loan data
+
+Fairness evaluation
+
+Stability checks over time
+
+Better calibration of the reward function to real monetary values
+
+Limitations of the Current Approach
+
+RL environment is simplified
+
+Reward design can strongly influence behavior
+
+No real bank data used
+
+DL model uses limited features
+
+RL policy is harder to explain to auditors
+
+Additional Data to Collect
+
+Income and employment details
+
+Bank transaction behavior
+
+More detailed loan history
+
+Economic indicators
+
+Past repayment behavior such as late payments
+
+Other Algorithms to Explore
+
+XGBoost or LightGBM for tabular data
+
+Constrained Reinforcement Learning
+
+Offline Reinforcement Learning using logged bank data
+
+Contextual Bandit algorithms
